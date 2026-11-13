@@ -1,0 +1,56 @@
+---
+import Base from "../../layouts/Base.astro";
+import IconLink from "../../components/IconLink.astro";
+import PartList from "../../components/PartList.astro";
+import { gear, site, type GearItem } from "../../data/site";
+import { copy, type NoteKey } from "../../i18n/copy";
+import { isLocale, localePaths } from "../../i18n/locale";
+
+export function getStaticPaths() {
+	return localePaths();
+}
+
+const locale = Astro.params.locale;
+if (!isLocale(locale)) throw new Error(`Unexpected locale: ${String(locale)}`);
+const text = copy[locale];
+
+function noteText(note: NoteKey | string) {
+	return note in text.notes ? text.notes[note as NoteKey] : note;
+}
+
+function itemHref(href: NonNullable<GearItem["href"]>) {
+	return typeof href === "string" ? href : href[locale];
+}
+---
+
+<Base
+	locale={locale}
+	path="gear"
+	title={`${text.nav.gear} · ${site.name}`}
+	description={text.gearDescription}
+	heading={text.nav.gear}
+	lede={text.gearLede}
+>
+	{
+		gear.map((group) => (
+			<section class="group">
+				<h2>{text.groups[group.id]}</h2>
+				{group.items.map((item) => (
+					<div class="item">
+						<p>
+							{item.href ? <IconLink href={itemHref(item.href)}>{item.name}</IconLink> : item.name}
+						</p>
+						{item.notes && (
+							<ul class="notes">
+								{item.notes.map((note) => (
+									<li>{noteText(note)}</li>
+								))}
+							</ul>
+						)}
+						{item.parts && <PartList parts={item.parts} locale={locale} labels={text.notes} />}
+					</div>
+				))}
+			</section>
+		))
+	}
+</Base>

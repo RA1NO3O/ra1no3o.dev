@@ -1,0 +1,16 @@
+---
+import { iconFor } from "../data/icons";
+
+interface Props {
+	href: string;
+	rel?: string;
+}
+
+const { href, rel } = Astro.props;
+const icon = iconFor(href);
+---
+
+<a class="icon-link" href={href} rel={rel}>
+	{icon && <img class="site-icon" src={icon} alt="" width="16" height="16" />}
+	<span><slot /></span>
+</a>

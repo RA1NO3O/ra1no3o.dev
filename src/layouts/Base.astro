@@ -1,0 +1,76 @@
+---
+import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import { site } from "../data/site";
+import { copy } from "../i18n/copy";
+import { htmlLang, locales, type Locale, type RoutePath } from "../i18n/locale";
+
+interface Props {
+	locale: Locale;
+	path: RoutePath;
+	title: string;
+	description: string;
+	heading?: string;
+	lede?: string;
+}
+
+const { locale, path, title, description, heading, lede } = Astro.props;
+const text = copy[locale];
+const canonical = getAbsoluteLocaleUrl(locale, path || undefined);
+const home = path === "";
+const alternates = locales.map((code) => ({
+	lang: htmlLang[code],
+	href: getAbsoluteLocaleUrl(code, path || undefined),
+}));
+---
+
+<html lang={htmlLang[locale]}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#f6f3ec" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#131210" media="(prefers-color-scheme: dark)" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={canonical} />
+		{
+			alternates.map((alternate) => (
+				<link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+			))
+		}
+		<link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl("en", path || undefined)} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:locale" content={htmlLang[locale]} />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="wrap">
+			<header>
+				{
+					home ? (
+						<h1 class="mark">{site.handle}</h1>
+					) : (
+						<p class="mark">
+							<a href={getRelativeLocaleUrl(locale)}>{site.handle}</a>
+						</p>
+					)
+				}
+				<p class="kicker">
+					{site.name} · {text.location}
+				</p>
+				<Nav locale={locale} path={path} />
+			</header>
+			<main>
+				{heading && <h1 class="page-title">{heading}</h1>}
+				{lede && <p class="lede">{lede}</p>}
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>

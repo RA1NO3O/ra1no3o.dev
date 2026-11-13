@@ -1,0 +1,26 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="This page is not on ra1no3o.dev." />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>404 · {site.handle}</title>
+	</head>
+	<body>
+		<div class="wrap">
+			<p class="mark">{site.handle}</p>
+			<p class="missing">404</p>
+			<ul class="langs missing-langs">
+				<li lang="zh-Hans"><a href="/zh-cn">简体</a> 这个页面不在站上。</li>
+				<li lang="zh-Hant"><a href="/zh-tw">繁體</a> 這個頁面不在站上。</li>
+				<li lang="en"><a href="/en">English</a> This page is not on the site.</li>
+				<li lang="ja"><a href="/ja">日本語</a> このページはありません。</li>
+			</ul>
+		</div>
+	</body>
+</html>

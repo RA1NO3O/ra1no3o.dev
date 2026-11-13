@@ -1,0 +1,35 @@
+---
+import type { NoteKey } from "../i18n/copy";
+import type { Locale } from "../i18n/locale";
+import type { GearPart } from "../data/site";
+import IconLink from "./IconLink.astro";
+import PartList from "./PartList.astro";
+
+interface Props {
+	parts: GearPart[];
+	locale: Locale;
+	labels: Record<NoteKey, string>;
+}
+
+const { parts, locale, labels } = Astro.props;
+
+function label(name: NoteKey | string) {
+	return name in labels ? labels[name as NoteKey] : name;
+}
+
+function hrefFor(href: NonNullable<GearPart["href"]>) {
+	return typeof href === "string" ? href : href[locale];
+}
+---
+
+<ul class="parts">
+	{
+		parts.map((part) => (
+			<li>
+				{part.href ? <IconLink href={hrefFor(part.href)}>{label(part.name)}</IconLink> : label(part.name)}
+				{part.note && <span class="part-note">{label(part.note)}</span>}
+				{part.parts && <PartList parts={part.parts} locale={locale} labels={labels} />}
+			</li>
+		))
+	}
+</ul>

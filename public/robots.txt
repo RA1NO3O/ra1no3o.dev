@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ra1no3o.dev/sitemap.xml

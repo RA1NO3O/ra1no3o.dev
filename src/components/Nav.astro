@@ -1,0 +1,53 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { copy } from "../i18n/copy";
+import { htmlLang, localeLabel, locales, type Locale, type RoutePath } from "../i18n/locale";
+
+interface Props {
+	locale: Locale;
+	path: RoutePath;
+}
+
+const { locale, path } = Astro.props;
+const labels = copy[locale].nav;
+
+const pages: Array<{ path: RoutePath; label: string }> = [
+	{ path: "", label: labels.now },
+	{ path: "gear", label: labels.gear },
+	{ path: "play", label: labels.play },
+];
+
+function href(code: Locale, route: RoutePath) {
+	return getRelativeLocaleUrl(code, route || undefined);
+}
+---
+
+<nav>
+	<ul class="nav">
+		{
+			pages.map((page) => (
+				<li>
+					<a href={href(locale, page.path)} aria-current={page.path === path ? "page" : undefined}>
+						{page.label}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
+<ul class="langs">
+	{
+		locales.map((code) => (
+			<li>
+				<a
+					href={href(code, path)}
+					hreflang={htmlLang[code]}
+					lang={htmlLang[code]}
+					aria-current={code === locale ? "true" : undefined}
+				>
+					{localeLabel[code]}
+				</a>
+			</li>
+		))
+	}
+</ul>

@@ -1,0 +1,55 @@
+---
+import Base from "../../layouts/Base.astro";
+import IconLink from "../../components/IconLink.astro";
+import { games, playstation, site } from "../../data/site";
+import { copy } from "../../i18n/copy";
+import { isLocale, localePaths } from "../../i18n/locale";
+
+export function getStaticPaths() {
+	return localePaths();
+}
+
+const locale = Astro.params.locale;
+if (!isLocale(locale)) throw new Error(`Unexpected locale: ${String(locale)}`);
+const text = copy[locale];
+---
+
+<Base
+	locale={locale}
+	path="play"
+	title={`${text.nav.play} · ${site.name}`}
+	description={text.playDescription}
+	heading={text.nav.play}
+	lede={text.playLede}
+>
+	<section class="group">
+		<h2>{text.account}</h2>
+		<ul class="list">
+			<li class="row">
+				<p class="name">
+					<IconLink href={playstation.href}>{playstation.label}</IconLink>
+				</p>
+				<code>{playstation.handle}</code>
+			</li>
+		</ul>
+	</section>
+	<section class="group">
+		<h2>{text.ids}</h2>
+		<ul class="list">
+			{
+				games.map((game) => {
+					const label = text.games[game.id];
+					return (
+						<li class="row">
+							<p class="name">
+								{game.href ? <IconLink href={game.href}>{label.name}</IconLink> : label.name}
+								{label.note ? <span class="note"> · {label.note}</span> : null}
+							</p>
+							<code>{game.code}</code>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</section>
+</Base>
