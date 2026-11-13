@@ -1,9 +1,11 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import IconLink from "../../components/IconLink.astro";
 import { profiles, site } from "../../data/site";
 import { copy } from "../../i18n/copy";
-import { isLocale, localePaths } from "../../i18n/locale";
+import { htmlLang, isLocale, localePaths } from "../../i18n/locale";
+import recentPhoto from "../../assets/photos/IMG_1044.jpeg";
 
 export function getStaticPaths() {
 	return localePaths();
@@ -12,6 +14,13 @@ export function getStaticPaths() {
 const locale = Astro.params.locale;
 if (!isLocale(locale)) throw new Error(`Unexpected locale: ${String(locale)}`);
 const text = copy[locale];
+const taken = "2024-04-28";
+const takenLabel = new Intl.DateTimeFormat(htmlLang[locale], {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+	timeZone: "UTC",
+}).format(new Date(`${taken}T00:00:00Z`));
 ---
 
 <Base
@@ -22,6 +31,22 @@ const text = copy[locale];
 >
 	<p class="sentence">{text.sentence}</p>
 	<p class="summary">{text.summary}</p>
+	<section class="group">
+		<h2>{text.photos}</h2>
+		<figure class="photo">
+			<Image
+				src={recentPhoto}
+				alt={text.photoAlt}
+				widths={[640, 960, 1280, 1920]}
+				sizes="(min-width: 44rem) 34rem, calc(100vw - 2.5rem)"
+				loading="eager"
+				fetchpriority="high"
+			/>
+			<figcaption>
+				<time datetime={taken}>{takenLabel}</time>
+			</figcaption>
+		</figure>
+	</section>
 	<ul class="profiles">
 		{
 			profiles.map((profile) => (

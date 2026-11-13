@@ -110,6 +110,8 @@ export const profiles = [
 	{ label: "Steam", href: "https://steamcommunity.com/id/RA1NO3O" },
 	{ label: "Discord", href: "https://discord.gg/KZQkrXz" },
 	{ label: "Apple Music", href: "https://music.apple.com/profile/RA1NO3O" },
+	{ label: "Bluesky", href: "https://bsky.app/profile/ra1no3o.dev", rel: "me" },
+	{ label: "Bilibili", href: "https://space.bilibili.com/11637303", rel: "me" },
 ] as const;
 
 export const playstation = {

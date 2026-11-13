@@ -30,6 +30,8 @@ type Copy = {
 	gearDescription: string;
 	playLede: string;
 	playDescription: string;
+	photos: string;
+	photoAlt: string;
 	account: string;
 	ids: string;
 	nav: { now: string; gear: string; play: string };
@@ -49,6 +51,8 @@ export const copy = {
 		gearDescription: "Phones, computers, audio, and consoles Rain actually uses.",
 		playLede: "Accounts and public IDs.",
 		playDescription: "PlayStation account and public game IDs for Rain.",
+		photos: "Recent photos",
+		photoAlt: "A wet street at night in the rain, with a lit wall and windows farther down the road.",
 		account: "Account",
 		ids: "IDs",
 		nav: { now: "Now", gear: "Gear", play: "Play" },
@@ -96,6 +100,8 @@ export const copy = {
 		gearDescription: "Rain 实际在用的手机、电脑、音频和游戏主机。",
 		playLede: "账号和公开 ID。",
 		playDescription: "Rain 的 PlayStation 账号和公开游戏 ID。",
+		photos: "最近照片",
+		photoAlt: "夜里的雨落在湿街上，左侧是亮着的墙，路的远处有窗户。",
 		account: "账号",
 		ids: "ID",
 		nav: { now: "现在", gear: "设备", play: "游戏" },
@@ -143,6 +149,8 @@ export const copy = {
 		gearDescription: "Rain 實際在用的手機、電腦、音訊和遊戲主機。",
 		playLede: "帳號和公開 ID。",
 		playDescription: "Rain 的 PlayStation 帳號和公開遊戲 ID。",
+		photos: "最近照片",
+		photoAlt: "夜裡的雨落在濕街上，左側是亮著的牆，路的遠處有窗戶。",
 		account: "帳號",
 		ids: "ID",
 		nav: { now: "現在", gear: "設備", play: "遊戲" },
@@ -190,6 +198,8 @@ export const copy = {
 		gearDescription: "Rain が実際に使っているスマホ、パソコン、オーディオ、ゲーム機。",
 		playLede: "アカウントと公開 ID。",
 		playDescription: "Rain の PlayStation アカウントと公開ゲーム ID。",
+		photos: "最近の写真",
+		photoAlt: "夜の雨に濡れた道。左は灯りのついた壁、奥に窓が見える。",
 		account: "アカウント",
 		ids: "ID",
 		nav: { now: "いま", gear: "機材", play: "プレイ" },
